@@ -1,0 +1,61 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DATABASE}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      # ha nem kell hostról elérni a db-t, ezt a ports blokkot nyugodtan töröld
+      - "${PG_PORT}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PG_USER} -d ${PG_DATABASE}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file:
+      - ./.env
+    environment:
+      # felülírjuk a localhost-os connection stringet dockerhez
+      ConnectionStrings__DefaultConnection: Host=db;Port=5432;Database=${PG_DATABASE};Username=${PG_USER};Password=${PG_PASSWORD}
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  migrate:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: migrator
+    env_file:
+      - ./.env
+    environment:
+      ConnectionStrings__DefaultConnection: Host=db;Port=5432;Database=${PG_DATABASE};Username=${PG_USER};Password=${PG_PASSWORD}
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: /api
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  pgdata:
