@@ -1,5 +1,5 @@
 ================================ 
-Run started: Mon 01/12/2026 23:04:25.07 
+Run started: Mon 01/12/2026 23:37:37.69 
 Working dir: D:\DDominikGit\IdleGarageTycoon 
 ================================ 
 === Build images === 
@@ -8,32 +8,205 @@ Compose can now delegate builds to bake for better performance.
 #0 building with "desktop-linux" instance using docker driver
 
 #1 [api internal] load build definition from Dockerfile
-#1 transferring dockerfile: 800B done
+#1 transferring dockerfile: 952B done
 #1 DONE 0.0s
 
 #2 [migrate internal] load build definition from Dockerfile
-#2 transferring dockerfile: 800B done
+#2 transferring dockerfile: 952B done
 #2 DONE 0.0s
 
 #3 [api internal] load metadata for mcr.microsoft.com/dotnet/aspnet:9.0
-#3 DONE 0.1s
+#3 DONE 0.0s
 
 #4 [api internal] load metadata for mcr.microsoft.com/dotnet/sdk:9.0
 #4 DONE 0.1s
 
-#5 [api internal] load .dockerignore
+#5 [migrate internal] load .dockerignore
 #5 transferring context: 2B done
 #5 DONE 0.0s
 
-#6 [api internal] load build context
+#6 [api internal] load .dockerignore
+#6 transferring context: 2B done
 #6 DONE 0.0s
 
-#7 [api base 1/2] FROM mcr.microsoft.com/dotnet/aspnet:9.0@sha256:22bcafd1f3c3bec34af587d205c631380352b15eeb52f9376f7cb3f6489c1f6f
-#7 resolve mcr.microsoft.com/dotnet/aspnet:9.0@sha256:22bcafd1f3c3bec34af587d205c631380352b15eeb52f9376f7cb3f6489c1f6f 0.0s done
-#7 CANCELED
+#7 [migrate migrator 1/5] FROM mcr.microsoft.com/dotnet/sdk:9.0@sha256:90872f8e7f1fd2b93989b81fb7f152c3bef4fe817470a3227abaa18c873dba60
+#7 resolve mcr.microsoft.com/dotnet/sdk:9.0@sha256:90872f8e7f1fd2b93989b81fb7f152c3bef4fe817470a3227abaa18c873dba60 0.0s done
+#7 DONE 0.0s
 
-#8 [api build 1/7] FROM mcr.microsoft.com/dotnet/sdk:9.0@sha256:90872f8e7f1fd2b93989b81fb7f152c3bef4fe817470a3227abaa18c873dba60
-#8 resolve mcr.microsoft.com/dotnet/sdk:9.0@sha256:90872f8e7f1fd2b93989b81fb7f152c3bef4fe817470a3227abaa18c873dba60 0.0s done
-#8 CANCELED
-failed to solve: target stage "migrator" could not be found
-❌ Hiba a lepesnel: Build images 
+#8 [api runtime 1/3] FROM mcr.microsoft.com/dotnet/aspnet:9.0@sha256:22bcafd1f3c3bec34af587d205c631380352b15eeb52f9376f7cb3f6489c1f6f
+#8 resolve mcr.microsoft.com/dotnet/aspnet:9.0@sha256:22bcafd1f3c3bec34af587d205c631380352b15eeb52f9376f7cb3f6489c1f6f 0.0s done
+#8 DONE 0.0s
+
+#9 [api internal] load build context
+#9 transferring context: 15.67kB 0.0s done
+#9 DONE 0.0s
+
+#10 [migrate internal] load build context
+#10 transferring context: 15.67kB 0.0s done
+#10 DONE 0.0s
+
+#11 [api migrator 2/5] WORKDIR /src
+#11 CACHED
+
+#12 [api build 3/5] COPY . .
+#12 CACHED
+
+#13 [api build 4/5] RUN dotnet restore "IdleGarageBackend.csproj"
+#13 CACHED
+
+#14 [api build 5/5] RUN dotnet publish "IdleGarageBackend.csproj" -c Release -o /app/publish
+#14 CACHED
+
+#15 [api runtime 2/3] WORKDIR /app
+#15 CACHED
+
+#16 [api runtime 3/3] COPY --from=build /app/publish .
+#16 CACHED
+
+#11 [migrate migrator 2/5] WORKDIR /src
+#11 CACHED
+
+#17 [migrate migrator 3/5] COPY . .
+#17 CACHED
+
+#18 [migrate migrator 4/5] RUN rm -rf /root/.nuget/packages /root/.dotnet/tools
+#18 CACHED
+
+#19 [migrate migrator 5/5] RUN dotnet tool install --global dotnet-ef --version 9.*
+#19 CACHED
+
+#20 [api] exporting to image
+#20 exporting layers done
+#20 exporting manifest sha256:4bc88ab1fbe32633d9fa679abd5e76df12fcf5f9540627c29d229a574f7dcb14 done
+#20 exporting config sha256:1d180cf09221ee88c549b9bf36393b763961766f9a7368d42c8edfc0ba59823b done
+#20 exporting attestation manifest sha256:278863f48a74271055b945c2fcc1d357cc1fdf264afecec7ea344d0d38a3d179 0.1s done
+#20 exporting manifest list sha256:8c03e8969abfaab0ab5cea9909bf0ace56bf024371f6d67f957273616f0b24f8
+#20 exporting manifest list sha256:8c03e8969abfaab0ab5cea9909bf0ace56bf024371f6d67f957273616f0b24f8 0.0s done
+#20 naming to docker.io/library/idlegaragetycoon-api:latest done
+#20 unpacking to docker.io/library/idlegaragetycoon-api:latest 0.0s done
+#20 DONE 0.2s
+
+#21 [migrate] exporting to image
+#21 exporting layers 0.0s done
+#21 exporting manifest sha256:8d933a5f668707fe13121244405e9d2f93be98d875d7709853b40bb6461514a1 done
+#21 exporting config sha256:9cdcb79d296bafc53cd2caabd4c053af2fa349b59ecdd9352a833577d87b29eb done
+#21 exporting attestation manifest sha256:5d4c41ffaff608e84ce8e454ea37ba163174f48e62398394beab133a2bf18482 0.1s done
+#21 exporting manifest list sha256:7023bdd345b41a663fa4f5879807244beb7b00590aa62d89e5f0bed05fffd24b 0.0s done
+#21 naming to docker.io/library/idlegaragetycoon-migrate:latest done
+#21 unpacking to docker.io/library/idlegaragetycoon-migrate:latest 0.0s done
+#21 DONE 0.2s
+
+#22 [api] resolving provenance for metadata file
+#22 DONE 0.0s
+
+#23 [migrate] resolving provenance for metadata file
+#23 DONE 0.0s
+
+#24 [web internal] load build definition from Dockerfile
+#24 DONE 0.0s
+
+#24 [web internal] load build definition from Dockerfile
+#24 transferring dockerfile: 391B done
+#24 DONE 0.0s
+
+#25 [web internal] load metadata for docker.io/library/node:20-alpine
+#25 ...
+
+#26 [web internal] load metadata for docker.io/library/nginx:alpine
+#26 DONE 1.2s
+
+#25 [web internal] load metadata for docker.io/library/node:20-alpine
+#25 DONE 1.2s
+
+#27 [web internal] load .dockerignore
+#27 transferring context: 2B done
+#27 DONE 0.0s
+
+#28 [web internal] load build context
+#28 DONE 0.0s
+
+#29 [web stage-1 1/3] FROM docker.io/library/nginx:alpine@sha256:c083c3799197cfff91fe5c3c558db3d2eea65ccbbfd419fa42a64d2c39a24027
+#29 resolve docker.io/library/nginx:alpine@sha256:c083c3799197cfff91fe5c3c558db3d2eea65ccbbfd419fa42a64d2c39a24027 0.0s done
+#29 DONE 0.1s
+
+#30 [web build 1/6] FROM docker.io/library/node:20-alpine@sha256:658d0f63e501824d6c23e06d4bb95c71e7d704537c9d9272f488ac03a370d448
+#30 resolve docker.io/library/node:20-alpine@sha256:658d0f63e501824d6c23e06d4bb95c71e7d704537c9d9272f488ac03a370d448
+#30 resolve docker.io/library/node:20-alpine@sha256:658d0f63e501824d6c23e06d4bb95c71e7d704537c9d9272f488ac03a370d448 0.0s done
+#30 DONE 0.1s
+
+#28 [web internal] load build context
+#28 transferring context: 934B done
+#28 DONE 0.0s
+
+#31 [web build 2/6] WORKDIR /app
+#31 CACHED
+
+#32 [web stage-1 2/3] COPY nginx.conf /etc/nginx/conf.d/default.conf
+#32 CACHED
+
+#33 [web build 4/6] RUN npm ci
+#33 CACHED
+
+#34 [web build 6/6] RUN npm run build
+#34 CACHED
+
+#35 [web build 3/6] COPY package*.json ./
+#35 CACHED
+
+#36 [web build 5/6] COPY . .
+#36 CACHED
+
+#37 [web stage-1 3/3] COPY --from=build /app/dist /usr/share/nginx/html
+#37 CACHED
+
+#38 [web] exporting to image
+#38 exporting layers done
+#38 exporting manifest sha256:bd49ab3aa530f089898ccbd7f044f607507b8387367a9017ed1e7144fce28f3c done
+#38 exporting config sha256:84a011f58bbf8ab83d03e5c0a575f610657251c7c3b22baf7dfec94fc696ca8b done
+#38 exporting attestation manifest sha256:f4ba7e6d3165a9d9d5ee0d29c7574f7c2feaa3aad9f5409376d700c498d1fc68 0.0s done
+#38 exporting manifest list sha256:13ac782fffd7e93c029a37b72fa38f0203ae74d998eb2866cc2f28e5f0968c75
+#38 exporting manifest list sha256:13ac782fffd7e93c029a37b72fa38f0203ae74d998eb2866cc2f28e5f0968c75 0.0s done
+#38 naming to docker.io/library/idlegaragetycoon-web:latest done
+#38 unpacking to docker.io/library/idlegaragetycoon-web:latest 0.0s done
+#38 DONE 0.1s
+
+#39 [web] resolving provenance for metadata file
+#39 DONE 0.0s
+ api  Built
+ migrate  Built
+ web  Built
+=== Start DB === 
+ Container idlegaragetycoon-db-1  Running
+=== Run EF migrations === 
+Using DB_CONN=Host=db;Port=5432;Database=idlegarage;Username=root;Password=root 
+ Container idlegaragetycoon-db-1  Running
+Build started...
+Build succeeded.
+fail: Microsoft.EntityFrameworkCore.Database.Connection[20004]
+      An error occurred using the connection to database 'idlegarage' on server 'tcp://localhost:3254'.
+An error occurred using the connection to database 'idlegarage' on server 'tcp://localhost:3254'.
+Npgsql.NpgsqlException (0x80004005): Failed to connect to 127.0.0.1:3254
+ ---> System.Net.Sockets.SocketException (111): Connection refused
+   at Npgsql.Internal.NpgsqlConnector.Connect(NpgsqlTimeout timeout)
+   at Npgsql.Internal.NpgsqlConnector.Connect(NpgsqlTimeout timeout)
+   at Npgsql.Internal.NpgsqlConnector.RawOpen(SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|214_1(NpgsqlConnector conn, SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.OpenNewConnector(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.<Get>g__RentAsync|33_0(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|42_0(Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.Open()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnection(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternal(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Migrations.HistoryRepository.GetAppliedMigrations()
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Internal.NpgsqlHistoryRepository.GetAppliedMigrations()
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Internal.NpgsqlMigrator.Migrate(String targetMigration)
+   at Microsoft.EntityFrameworkCore.Design.Internal.MigrationsOperations.UpdateDatabase(String targetMigration, String connectionString, String contextType)
+   at Microsoft.EntityFrameworkCore.Design.OperationExecutor.UpdateDatabaseImpl(String targetMigration, String connectionString, String contextType)
+   at Microsoft.EntityFrameworkCore.Design.OperationExecutor.UpdateDatabase.<>c__DisplayClass0_0.<.ctor>b__0()
+   at Microsoft.EntityFrameworkCore.Design.OperationExecutor.OperationBase.Execute(Action action)
+Failed to connect to 127.0.0.1:3254
+
+❌ Hiba a lepesnel: Run EF migrations 

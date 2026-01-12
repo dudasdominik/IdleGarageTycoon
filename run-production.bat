@@ -9,10 +9,7 @@ echo Run started: %DATE% %TIME% >> "%LOGFILE%"
 echo Working dir: %CD% >> "%LOGFILE%"
 echo ================================ >> "%LOGFILE%"
 
-rem ====== helper: run command and capture error ======
 set "STEP="
-
-rem Ensure we don't auto-close
 title run-prod
 
 if not exist ".env" (
@@ -52,7 +49,19 @@ rem ====== STEP 3 ======
 set "STEP=Run EF migrations"
 echo === %STEP% ===
 echo === %STEP% === >> "%LOGFILE%"
-docker compose run --rm migrate >> "%LOGFILE%" 2>&1
+
+rem Load .env so we can build the docker-network connection string
+for /f "usebackq tokens=1,* delims==" %%A in (".env") do (
+  echo %%A| findstr /b "#" >nul
+  if errorlevel 1 (
+    set "%%A=%%B"
+  )
+)
+
+set "DB_CONN=Host=db;Port=5432;Database=%PG_DATABASE%;Username=%PG_USER%;Password=%PG_PASSWORD%"
+echo Using DB_CONN=%DB_CONN% >> "%LOGFILE%"
+
+docker compose run --rm -e ConnectionStrings__DefaultConnection="%DB_CONN%" migrate >> "%LOGFILE%" 2>&1
 if errorlevel 1 goto FAIL
 
 rem ====== STEP 4 ======
@@ -80,7 +89,7 @@ exit /b 0
 echo.
 echo ❌ Hiba a lepesnel: %STEP%
 echo ❌ Hiba a lepesnel: %STEP% >> "%LOGFILE%"
-echo --- Last 80 log lines --- 
+echo --- Last 80 log lines ---
 powershell -NoProfile -Command "Get-Content -Path '%LOGFILE%' -Tail 80" 2>nul
 echo.
 echo Teljes log: "%LOGFILE%"
